@@ -53,6 +53,21 @@ def processRequest(req):
         webhookresponse = str(fulfillmentText.get('Your Teams: ')) + "Your Teams: " + teams
         print(webhookresponse)
 
+        return {
+
+            "fulfillmentMessages": [
+                {
+                    "text": {
+                        "text": [
+                            webhookresponse
+                        ]
+
+                    }
+                }
+            ]
+        }
+
+
 #########################################
 
 
