@@ -1,22 +1,61 @@
 from Tool import app, db , socketio
 from Tool.forms import RegistrationForm, LoginForm , MakeTeamForm , TeamLoginForm , MakeUpcoming , UpdateUserForm ,UpdateTeamForm , Make_Rental , UpdateRent , KnowledgeForm , UpdateKnowledgeForm
 from Tool.models import User,Team,Events , Rent , Knowledge
-from flask import render_template,request, url_for, redirect, flash ,abort
+from flask import render_template,request, url_for, redirect, flash ,abort, jsonify, make_response
 from flask_login import current_user, login_required, login_user , logout_user
 from picture_handler import add_profile_pic , add_team_pic , add_rent_pic , add_knowledge_pic
 import secrets
 from sqlalchemy import desc, asc
 import os
+import json
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, abort
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VideoGrant
 
+
 load_dotenv()
 twilio_account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
 twilio_api_key_sid = os.environ.get('TWILIO_API_KEY_SID')
 twilio_api_key_secret = os.environ.get('TWILIO_API_KEY_SECRET')
-#imports
+
+
+def userby_username(username):
+    user = User.query.filter_by(username=username.data).first()
+    return user
+
+def teamsby_username(username):
+    teams = User.query.filter_by(username=username.teams).all()
+    return teams
+
+############ * CHATBOT * #################
+
+@app.route('/webhook', methods=['POST'])
+@cross_origin()
+def webhook():
+    print("hello")
+    req = request.get_json(silent=True, force=True)
+    res = processRequest(req)
+    res = json.dumps(res, indent=4)
+    print(res)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    return r
+
+def processRequest(req):
+    intent = result.get("intent").get('displayName')
+    result = req.get("queryResult")
+    parameters = result.get("parameters")
+
+    if intent == 'Organiziva_ViewTeams':
+        username = parameters.get(username)
+        teams = teamsby_username(username)
+        webhookresponse = str(fulfillmentText.get('Your Teams: ')) + "Your Teams: " + teams
+        print(webhookresponse)
+
+#########################################
+
+
 
 @app.route('/' , methods = ['GET' , 'POST'])
 def index():
