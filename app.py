@@ -49,9 +49,9 @@ def processRequest(req):
 
     if intent == 'Organiziva_ViewTeams':
         username = parameters.get(username)
-        teams = teamsby_username(username)
-        webhookresponse = str(fulfillmentText.get('Your Teams: ')) + "Your Teams: " + teams
-        print(webhookresponse)
+        #teams = teamsby_username(username)
+        #webhookresponse = str(fulfillmentText.get('Your Teams: ')) + "Your Teams: " + teams
+        #print(webhookresponse)
 
         return {
 
@@ -59,7 +59,7 @@ def processRequest(req):
                 {
                     "text": {
                         "text": [
-                            webhookresponse
+                            "hello"
                         ]
 
                     }
