@@ -31,7 +31,6 @@ def teamsby_username(username):
 ############ * CHATBOT * #################
 
 @app.route('/webhook', methods=['POST'])
-@cross_origin()
 def webhook():
     print("hello")
     req = request.get_json(silent=True, force=True)
