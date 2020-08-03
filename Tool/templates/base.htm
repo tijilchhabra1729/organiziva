@@ -10,7 +10,7 @@
     <link rel="icon" href="{{url_for('static', filename="Screenshot (163).png")}}">
     <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" media="screen" href="{{url_for('static', filename="remote.css")}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -43,10 +43,12 @@
           {%else%}
           <a class="clicks nav-item active" href="{{url_for('register')}}">Register</a>
           <a class="clicks nav-item active" href="{{url_for('login')}}">Login</a>
+          <a class="clicks nav-item active" href="{{url_for('chatbot')}}">Chatbot</a>
           {%endif%}
 
       </div>
   </nav>
+
   {%block content%}
   {%endblock%}
 </body>

@@ -21,18 +21,32 @@ twilio_api_key_secret = os.environ.get('TWILIO_API_KEY_SECRET')
 
 
 def userby_username(username):
-    user = User.query.filter_by(username=username.data).first()
+    user = User.query.filter_by(username=username).first()
+    print('user' + str(user.id) + user.email)
     return user
 
-def teamsby_username(username):
-    teams = User.query.filter_by(username=username.teams).all()
-    return teams
+def teamsby_username(user):
+    a = 1
+    teams = user.teams
+    if len(teams) == 0:
+        team_names = "You are not a member of any team. Please join a team."
+    else:
+        team_names = 'Your Teams are: ' + '\n'
+        for team in teams:
+            team = str(team)[-2]
+            team = int(team)
+            team = Team.query.filter_by(id=team).first()
+            team_name = team.name
+            team_names += str(a) + '.' + team_name + '\n'
+            a += 1
+    print(team_names)
+    return team_names
 
 ############ * CHATBOT * #################
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    print("hello")
+    print("webhook started")
     req = request.get_json(silent=True, force=True)
     res = processRequest(req)
     res = json.dumps(res, indent=4)
@@ -42,15 +56,18 @@ def webhook():
     return r
 
 def processRequest(req):
-    intent = result.get("intent").get('displayName')
     result = req.get("queryResult")
+    intent = result.get("intent").get('displayName')
     parameters = result.get("parameters")
 
     if intent == 'Organiziva_ViewTeams':
-        username = parameters.get(username)
-        #teams = teamsby_username(username)
-        #webhookresponse = str(fulfillmentText.get('Your Teams: ')) + "Your Teams: " + teams
+        try:
+            username = parameters.get('username')
+            user = userby_username(username)
+            webhookresponse = teamsby_username(user)
         #print(webhookresponse)
+        except AttributeError:
+            webhookresponse = "User "+ username + " does not exist! Please enter a vaid username."
 
         return {
 
@@ -58,7 +75,7 @@ def processRequest(req):
                 {
                     "text": {
                         "text": [
-                            "hello"
+                            webhookresponse
                         ]
 
                     }
@@ -74,6 +91,10 @@ def processRequest(req):
 @app.route('/' , methods = ['GET' , 'POST'])
 def index():
     return render_template("index.htm")
+
+@app.route('/chatbot')
+def chatbot():
+    return render_template('chatbot.htm')
 
 @app.route('/register' , methods = ['GET', 'POST'])
 def register():
@@ -544,4 +565,4 @@ def internal_server_error(e):
 
 
 if __name__ == '__main__':
-    socketio.run(app,debug=True)
+    socketio.run(app, debug=True)
