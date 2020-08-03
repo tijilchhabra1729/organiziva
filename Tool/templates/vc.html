@@ -110,7 +110,7 @@ body {
         </span>
         <div style="margin-left: 8%;">
       <h1>{{team.name}}</h1>
-      <a title="whiteboard" style="float: right; font-size: 180%;" href="{{url_for('whiteboard' , team_id = team_id)}}">Whiteboard</a>
+      <a title="whiteboard" target = "_blank" style="float: right; font-size: 180%;" href="{{url_for('whiteboard' , team_id = team_id)}}">Whiteboard</a>
       <form style="font-size: larger;">
           <label for="username">Name: </label>
           <input  type="text" name=”username” value = {{current_user.name}} disabled = "disabled"  id="username">
