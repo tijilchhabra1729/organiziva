@@ -104,7 +104,8 @@ body {
     </div>
     <div id = "main">
       <span style="font-size:30px;cursor:pointer; float:right;" onclick="openNav()">&#9776; Chat</span>
-      <h1>Organiziva</h1>
+      <h1>{{team.name}}</h1>
+      <a title="video call" style=" padding: 0.61% ;border-radius: 7%;" class="addition" href="{{url_for('whiteboard' , team_id = team_id)}}">open whiteboard</a>
       <form>
           <label for="username">Name: </label>
           <input type="text" name=”username” value = {{current_user.name}} disabled = "disabled"  id="username">

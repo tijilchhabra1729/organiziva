@@ -549,15 +549,25 @@ def delete_event(event_id,team_id):
         db.session.commit()
         return redirect(url_for('team' , team_id = team_id))
 
-@app.route('/whiteboard')
-def whiteboard():
-    return render_template('whiteboard.html')
+@app.route('/whiteboard/<team_id>')
+def whiteboard(team_id):
+    team = Team.query.filter_by(randomid = team_id).first()
+    if team is None:
+        abort(404)
+    elif current_user not in team.workers:
+        abort(403)
+    return render_template('whiteboard.html' , team = team )
 
 
 
-@app.route('/vc')
-def vc():
-    return render_template('vc.html')
+@app.route('/<team_id>/vc', methods=['GET','POST'])
+def vc(team_id):
+    team = Team.query.filter_by(randomid = team_id).first()
+    if team is None:
+        abort(404)
+    elif current_user not in team.workers:
+        abort(403)
+    return render_template('vc.html' , team_id = team_id , team = team)
 
 
 @app.route('/vc_login', methods=['POST'])
