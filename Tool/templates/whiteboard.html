@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='canvas.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <div id="toolbar">
+    <div style="float: left;">
+        Organiziva's Canvas Board
+    </div>
+
+    <div id="colors" style="float: right;">
+
+        <div class="swatch active" style="background-color: black;"></div>
+        <div class="swatch" style="background-color: yellow;"></div>
+        <div class="swatch" style="background-color: green;"></div>
+        <div class="swatch" style="background-color: blue;"></div>
+        <div class="swatch" style="background-color: red;"></div>
+        <div class="swatch" style="background-color: orange;"></div>
+        <div class="swatch" style="background-color: purple;"></div>
+        <div class="swatch" style="background-color: white;"></div>
+
+    </div>
+        <div id="rad" style="float: right; margin-left: 10%;">
+                Marker-Radius: <span id="radval">7</span>
+                <div id="plus" class="radcontrol" style="cursor: pointer; margin-left: 3px;">+</div>
+                <div id="minus" class="radcontrol" style="cursor: pointer; margin-left: 3px;">-</div>
+        </div>
+
+
+
+    </div>
+    <canvas id='canvas' width="1200" height="640" style="display: block;">
+        Sorry, your browser can't display our canvas.
+    </canvas>
+    <script src="{{url_for('static', filename="board.js")}}"></script>
+</body>
+</html>

@@ -16,6 +16,14 @@
       {{form.description.label}}{{form.description(class = 'form-control col-md-6' ,placeholder="Description" )}}
     </div>
     <div class="form-group">
+      <small class = 'text-danger'></small>
+      {{form.users.label}}{{form.users(class = 'form-control col-md-6' ,placeholder="seperate by comma for eg. john01,amilia23" )}}
+    </div>
+    <div class="form-group">
+      <small class = 'text-danger'></small>
+      {{form.start_date.label}}{{form.start_date(class = 'form-control col-md-6' ,placeholder="yyyy-mm-dd" )}}
+    </div>
+    <div class="form-group">
       {{form.submit(class ="btn btn-primary")}}
     </div>
   </form>

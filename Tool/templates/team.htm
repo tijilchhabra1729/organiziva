@@ -140,8 +140,10 @@ body {
 
       <div class = "list-item center jumbotron border">
         {{event.title}}
-                <small id="emailHelp" class="form-text text-muted">Published :{{event.date.strftime('%d-%m-%Y/%H:%M')}}</small>
-
+        <small id="emailHelp" class="form-text text-muted">Published :{{event.date.strftime('%d-%m-%Y/%H:%M')}}</small>
+        {%if event.start_date%}
+          <small id="emailHelp" class="form-text text-muted">Will start on :{{event.start_date.strftime('%d-%m-%Y')}}</small>
+        {%endif%}
         <a href="{{url_for('event' ,team_id = team_id, event_id = event.id) }}">read more</a>
         <br>
         {%if current_user.id == team.ownerid%}
@@ -168,7 +170,7 @@ body {
       {%for event in team_ongoing%}
       <div class = "list-item jumbotron border">
         {{event.title}}
-        <small id="emailHelp" class="form-text text-muted">Published :{{event.date.strftime('%d-%m-%Y/%H:%M')}}</small>
+        <small id="emailHelp" class="form-text text-muted">Started On :{{event.start_date.strftime('%d-%m-%Y')}}</small>
 
         <a href="{{url_for('event' ,team_id = team_id, event_id = event.id )}}">read more</a>
         <br>
@@ -195,7 +197,8 @@ body {
       {%for event in team_completed%}
       <div class = "list-item jumbotron border">
         {{event.title}}
-        <small id="emailHelp" class="form-text text-muted">Published :{{event.date.strftime('%d-%m-%Y/%H:%M')}}</small>
+        <small id="emailHelp" class="form-text text-muted">Started :{{event.start_date.strftime('%d-%m-%Y')}}</small>
+        <small id="emailHelp" class="form-text text-muted">Ended :{{event.end_date.strftime('%d-%m-%Y/%H:%M')}}</small>
         <a href="{{url_for('event' ,team_id = team_id, event_id = event.id)}}">read more</a>
         <br>
         {%if current_user.id == team.ownerid%}

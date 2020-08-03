@@ -9,6 +9,10 @@ def load_user(user_id):
 work = db.Table('work',
   db.Column('user_id', db.Integer , db.ForeignKey('users.id')),
   db.Column('team_id', db.Integer , db.ForeignKey('teams.id')))
+
+event = db.Table('event',
+  db.Column('user_id', db.Integer , db.ForeignKey('users.id')),
+  db.Column('event_id', db.Integer , db.ForeignKey('events.id')))
 class User(db.Model,UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer,primary_key = True)
@@ -21,6 +25,8 @@ class User(db.Model,UserMixin):
     rent = db.relationship('Rent' , backref = 'user' , lazy = 'dynamic')
     knowledge = db.relationship('Knowledge' , backref = 'user' , lazy = 'dynamic')
     teams = db.relationship('Team' , secondary = work , backref = db.backref('workers', lazy = 'dynamic'))
+    events = db.relationship('Events' , secondary = event , backref = db.backref('doers', lazy = 'dynamic'))
+
     def check_password(self,password):
         return check_password_hash(self.password_hash,password)
 
@@ -55,6 +61,8 @@ class Events(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     teamid = db.Column(db.Integer, db.ForeignKey('teams.randomid'))
     date = db.Column(db.DateTime,nullable = False,default=datetime.now)
+    start_date = db.Column(db.DateTime,nullable = True)
+    end_date = db.Column(db.DateTime,nullable = True)
     title = db.Column(db.String)
     event = db.Column(db.String)
     type = db.Column(db.String)

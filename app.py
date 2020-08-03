@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request, abort
 from twilio.jwt.access_token import AccessToken
 from twilio.jwt.access_token.grants import VideoGrant
-
+from datetime import datetime
 
 load_dotenv()
 twilio_account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
@@ -83,6 +83,9 @@ def processRequest(req):
             ]
         }
 
+
+
+############ * CHATBOT * #################
 
 #########################################
 
@@ -190,6 +193,7 @@ def join_team():
 @login_required
 def make_upcoming(team_id,type):
     error = ''
+    zoo = ''
     print(type)
     team = Team.query.filter_by(randomid = team_id).first()
     form = MakeUpcoming()
@@ -201,35 +205,69 @@ def make_upcoming(team_id,type):
                             type = type)
             db.session.add(event)
             db.session.commit()
+            if form.start_date.data is not None and type == 'upcoming' or type == 'completed':
+                event.start_date = form.start_date.data
+                db.session.commit()
+            if type == 'ongoing' :
+                event.start_date = datetime.now()
+                db.session.commit()
+            if type == 'completed':
+                zoo = 'Looks like You forgot to make this event while it was upcoming or ongoing. Never mind you can store it in our database so that we remember your achievement'
+                event.end_date = datetime.now()
+                db.session.commit()
+            user = []
+            users = form.users.data
+            if ',' in users:
+                user = users.split(',')
+            elif users == 'all':
+                for worker in team.workers:
+                    user.append(worker.username)
+            else:
+                user.append(users)
+            for u in user:
+                worker = User.query.filter_by(username = u).first()
+                if worker is None or worker not in team.workers:
+                    continue
+                else:
+                    worker.events.append(event)
+                    db.session.commit()
             return redirect(url_for('team' , team_id = team_id))
         elif team is not None and team.ownerid != current_user.id :
             abort(403)
         elif team is None:
-            error = 'No such team'
-    return render_template('upcoming.htm' , form = form , type = type)
+            abort(404)
+    return render_template('upcoming.htm' , form = form , type = type , zoo = zoo)
 
 @app.route('/<team_id>/team', methods = ['GET' , 'POST'])
 @login_required
 def team(team_id):
     team = Team.query.filter_by(randomid = team_id).first()
     if current_user in team.workers:
-        team_upcoming = Events.query.filter_by(type = 'upcoming', teamid = team_id).order_by(Events.date.asc())
-        team_ongoing = Events.query.filter_by(type = 'ongoing', teamid = team_id).order_by(Events.date.asc())
+        team_upcoming = Events.query.filter_by(type = 'upcoming', teamid = team_id).order_by(Events.start_date.asc())
+        for upcoming in team_upcoming:
+            if upcoming.start_date is None:
+                continue
+            now = datetime.now()
+            if upcoming.start_date.strftime('%d-%m-%Y') <= now.strftime('%d-%m-%Y'):
+                return redirect(url_for('change_event' , team_id = team_id , event_id = upcoming.id , type = 'o'))
+        team_ongoing = Events.query.filter_by(type = 'ongoing', teamid = team_id).order_by(Events.start_date.asc())
         team_completed = Events.query.filter_by(type = 'completed', teamid = team_id).order_by(Events.date.asc())
         team_owner = team.ownerid
     else:
         abort(403)
-    return render_template('team.htm',team = team ,team_owner = team_owner, team_upcoming = team_upcoming, team_ongoing = team_ongoing , team_completed = team_completed , team_id = team_id)
+    return render_template('team.htm',team = team ,team_owner = team_owner, team_upcoming = team_upcoming,
+                            team_ongoing = team_ongoing , team_completed = team_completed , team_id = team_id )
 
 @app.route('/<team_id>/<event_id>/event', methods = ['GET' , 'POST'])
 @login_required
 def event(team_id,event_id):
+    mylist = []
     team = Team.query.filter_by(randomid = team_id).first()
     if current_user in team.workers:
         events = Events.query.filter_by(id = event_id).first()
     else:
         abort(403)
-    return render_template('event.htm', events = events)
+    return render_template('event.htm', events = events , mylist = mylist)
 
 @app.route('/<team_id>/<event_id>/<type>/changeevent', methods = ['GET' , 'POST'])
 @login_required
@@ -241,8 +279,10 @@ def change_event(team_id,event_id,type):
             event.type = 'upcoming'
         elif type == 'o':
             event.type = 'ongoing'
+            event.start_date = datetime.now()
         elif type == 'c':
             event.type = 'completed'
+            event.end_date = datetime.now()
         db.session.commit()
     else:
         abort(403)
@@ -509,6 +549,12 @@ def delete_event(event_id,team_id):
         db.session.commit()
         return redirect(url_for('team' , team_id = team_id))
 
+@app.route('/whiteboard')
+def whiteboard():
+    return render_template('whiteboard.html')
+
+
+
 @app.route('/vc')
 def vc():
     return render_template('vc.html')
@@ -565,4 +611,4 @@ def internal_server_error(e):
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app,debug=True)

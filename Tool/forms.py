@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField ,SubmitField , TextAreaField , FileField , IntegerField , RadioField
+from wtforms import StringField, PasswordField ,SubmitField , TextAreaField , FileField , IntegerField , RadioField , DateField
 from wtforms.validators import DataRequired, Email , EqualTo, Length
 from flask_wtf.file import FileField,FileAllowed
 from wtforms import ValidationError
@@ -48,6 +48,8 @@ class TeamLoginForm(FlaskForm):
 class MakeUpcoming(FlaskForm):
     title = StringField('Event Name', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
+    start_date = DateField('When will event start' , format='%Y-%m-%d')
+    users = StringField('Who all have to do this task.' , validators=[DataRequired()])
     submit = SubmitField('Place Event')
 class UpdateUserForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(),Email()])

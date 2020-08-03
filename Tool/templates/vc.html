@@ -1,23 +1,163 @@
-<!doctype html>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-    </head>
-    <body>
-        <h1>Flask & Twilio Video Conference</h1>
-        <form>
-            <label for="username">Name: </label>
-            <input type="text" name=”username” id="username">
-            <button id="join_leave">Join call</button>
-            <button id="share_screen" disabled>Share screen</button>
-        </form>
-        <p id="count">Disconnected.</p>
-        <div id="container" class="container">
-            <div id="local" class="participant"><div></div><div class="label">Me</div></div>
-            <!-- more participants will be added dynamically here -->
-        </div>
+{%extends 'base.htm'%}
+{%block head%}
+<style >
+body {
+  font-family: "Lato", sans-serif;
+  transition: background-color .5s;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  left: 25px;
+  font-size: 36px;
+  margin-right: 50px;
+}
+.container {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.participant {
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+.participant div {
+    text-align: center;
+}
+.participant div video {
+    background-color: #ccc;
+    border: 1px solid black;
+}
+.participant div video:not(.participantZoomed) {
+    width: 240px;
+    height: 180px;
+}
+.participant .label {
+    background-color: #ddd;
+}
+.participantZoomed {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.participantHidden {
+    display: none;
+}
+#mySidenav{
+  color: white !important;
+}
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+{%endblock%}
+{%block content%}
+  <br><br><br><br>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" id = "mySidenav" style="font-size: 30px;" align = "right" onclick="closeNav()">x</a>
+      <div>
+          <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
+          <div class="message_holder"></div>
+
+          <form action="" method="POST">
+            <input type="text" value = {{current_user.name}} disabled = "disabled" class="username" placeholder="User Name"/>
+            <input type="text" class="message" placeholder="Messages"/>
+            <input type="submit"/>
+          </form>
+      </div>
+    </div>
+    <div id = "main">
+      <span style="font-size:30px;cursor:pointer; float:right;" onclick="openNav()">&#9776; Chat</span>
+      <h1>Organiziva</h1>
+      <form>
+          <label for="username">Name: </label>
+          <input type="text" name=”username” value = {{current_user.name}} disabled = "disabled"  id="username">
+          <button id="join_leave">Join call</button>
+          <button id="share_screen" disabled>Share screen</button>
+      </form>
+      <p id="count">Disconnected.</p>
+      <div id="container" class="container">
+          <div id="local" class="participant"><div></div><div class="label">Me</div></div>
+          <!-- more participants will be added dynamically here -->
+      </div>
+    </div>
+
 
         <script src="//media.twiliocdn.com/sdk/js/video/releases/2.3.0/twilio-video.min.js"></script>
         <script src="{{ url_for('static', filename='app.js') }}"></script>
-    </body>
-</html>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        <script type="text/javascript">
+          var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+          socket.on( 'connect', function() {
+            socket.emit( 'my event', {
+              data: 'User Connected'
+            } )
+            var form = $( 'form' ).on( 'submit', function( e ) {
+              e.preventDefault()
+              let user_name = $( 'input.username' ).val()
+              let user_input = $( 'input.message' ).val()
+              socket.emit( 'my event', {
+                user_name : user_name,
+                message : user_input
+              } )
+              $( 'input.message' ).val( '' ).focus()
+            } )
+          } )
+          socket.on( 'my response', function( msg ) {
+            console.log( msg )
+            if( typeof msg.user_name !== 'undefined' ) {
+              $( 'h3' ).remove()
+              $( 'div.message_holder' ).append( '<div><b style="color: #000">'+msg.user_name+'</b> '+msg.message+'</div>' )
+            }
+          })
+        </script>
+        <script>
+        function openNav() {
+          document.getElementById("mySidenav").style.width = "250px";
+          document.getElementById("main").style.marginRight = "250px";
+        }
+
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+          document.getElementById("main").style.marginRight= "0";
+        }
+        </script>
+{%endblock%}

@@ -2,7 +2,17 @@
 {%block content%}
 <br><br><br><br><br><br><br><br><br><br>
 <div class="container jumbotron event">
+  {%for do in events.doers%}
+    <p style="font-size:0;">{{mylist.append(do.username)}}</p>
+  {%endfor%}
+  <small id="emailHelp" class="form-text text-muted">People who have to do :</small>
+  {%for m in events.doers%}
+    <small id="emailHelp" class="form-text text-muted">{{mylist.pop()}}</small>
+  {%endfor%}
+
+  <h1>Description</h1>
   <p style="font-size: 140%;">{{events.event}}</p>
+
 </div>
 
 {%endblock%}
