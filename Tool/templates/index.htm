@@ -6,6 +6,21 @@
 <p id="quote">"Your Opportunities meet their planning here."</p>
 </div>
 
+
+<img id="chat-btn" src="{{url_for('static', filename="chat.png")}}" alt="Our Chatty Bot is not loading" onclick="openBot()">
+<div style="flex-direction: column;" id="myBot" class="open-up animate__animated animate__fadeIn">
+<iframe 
+  allow="microphone;"
+  width="350"
+  height="430"
+  src="https://console.dialogflow.com/api-client/demo/embedded/organiziva"   
+  >  
+</iframe>
+<button type="button" class="btn btn-primary cancel" onclick="closeBot()">Close</button>
+</div>
+
+
+
 <div class="about">
   <!-- JUMBOTRON -->
 
@@ -99,6 +114,15 @@
 </div>
 
 <script src="{{url_for('static', filename="type.js")}}"></script>
+<script>
+  function openBot() {
+    document.getElementById("myBot").style.display = "flex";
+  }
+  
+  function closeBot() {
+    document.getElementById("myBot").style.display = "none";
+  }
+  </script>
 <script>
   AOS.init({
     duration: 1200,

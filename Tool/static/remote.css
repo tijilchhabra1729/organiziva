@@ -20,7 +20,32 @@ body {
     padding-top: 5px ;
     float: right;
 }
-
+.open-up{
+    display: none;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 16;
+}
+.cancel{
+    background-color: #44449C !important;
+    color: white !important;
+    font-size: larger !important;
+    top: 0 !important;
+    z-index: 18;
+    outline: none !important;
+    border: none !important;
+}
+#chat-btn {
+    height: 10vh;
+    z-index: 15;
+    cursor: pointer;
+    position: fixed;
+    border-radius: 50%;
+    bottom: 4vh;
+    right: 1vw;
+    box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.452);
+}
 #home {
     background-attachment: fixed;
     background-image: url(twoimg.jpg);
@@ -77,7 +102,7 @@ a {
 }
 button {
     outline: none !important;
-    
+    border: none !important;    
 }
 
 .change{
