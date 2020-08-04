@@ -90,40 +90,46 @@ body {
 {%block content%}
   <br><br><br><br>
     <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" id = "mySidenav" style="font-size: 30px;" align = "right" onclick="closeNav()">x</a>
+        <a href="javascript:void(0)" id = "mySidenav" style="font-size: 30px; margin-top: 5%;" align = "right" onclick="closeNav()">X</a>
       <div>
           <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
           <div class="message_holder"></div>
 
-          <form action="" method="POST">
-            <input style = "font-color: white;" type="text" value = {{current_user.name}} disabled = "disabled" class="username" placeholder="User Name"/>
+          <form style="font-weight: bolder; font-size: larger;" action="" method="POST">
+            <input style="font-weight: 800; color: black;" type="text" value = {{current_user.name}} disabled = "disabled" class="username" placeholder="User Name"/>
             <input type="text" class="message" placeholder="Messages"/>
             <input type="submit"/>
           </form>
       </div>
     </div>
+    <center>
+<br>
+     
+      
     <div id = "main">
-
+      <h1 style="font-weight: bolder;">VideoChat Room of:</h1><br>
       <span style="font-size:30px;cursor:pointer; float:right;" onclick="openNav()">
-        Chat
-        <i class="fa fa-commenting"></i>
+        <i class="fa fa-commenting" style="color: black;"></i>
+        <b>Chat</b>
         </span>
         <div style="margin-left: 8%;">
-      <h1>{{team.name}}</h1>
-      <a title="whiteboard" target = "_blank" style="float: right; font-size: 180%;" href="{{url_for('whiteboard' , team_id = team_id)}}">Whiteboard</a>
+      <h1 >Team {{team.name}}</h1><br>
+      <a title="whiteboard" target = "_blank" style="float: right; font-size: 180%;" href="{{url_for('whiteboard' , team_id = team_id)}}">
+        <i class="fas fa-chalkboard-teacher" style="font-size:30px;"></i>
+        <b>Canvas</b></a>
       <form style="font-size: larger;">
-          <label for="username">Name: </label>
+          <label style="font-size: larger;" for="username">Name: </label>
           <input  type="text" name=”username” value = {{current_user.name}} disabled = "disabled"  id="username">
           <button  class="btn btn-primary change" id="join_leave">Join call</button>
           <button  class="btn btn-primary change" id="share_screen" disabled>Share screen</button>
       </form>
-      <p id="count">Disconnected.</p>
+      <p style="font-size: x-large; color: red;" id="count">Disconnected.</p>
       <div id="container" class="container">
-          <div id="local" class="participant"><div></div><div class="label">Me</div></div>
+          <div style="font-size: larger; font-weight: bold;" id="local" class="participant"><div></div><div class="label">Me</div></div>
           <!-- more participants will be added dynamically here -->
       </div>
     </div>
-    </div>
+    </div></center>
 
 
         <script src="//media.twiliocdn.com/sdk/js/video/releases/2.3.0/twilio-video.min.js"></script>
@@ -152,7 +158,7 @@ body {
             console.log( msg )
             if( typeof msg.user_name !== 'undefined' ) {
               $( 'h3' ).remove()
-              $( 'div.message_holder' ).append( '<div><b style="color: #000">'+msg.user_name+'</b> '+msg.message+'</div>' )
+              $( 'div.message_holder' ).append( '<div><b style="color: white; font-size: larger;">'+msg.user_name+'</b> '+msg.message+'</div>' )
             }
           })
         </script>

@@ -2,14 +2,18 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='canvas.css') }}">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='remote.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Whiteboard</title>
 </head>
 <body>
     <div id="toolbar">
-    <div style="float: left;">
+    <div style="float: left;font-size: x-large;">
         {{team.name}}'s Canvas Board
     </div>
-
+    <button style="float: right; margin-left: 5%; margin-right: 7%;" class="btn btn-primary change" onClick="window.location.reload();">Clear All</button>
     <div id="colors" style="float: right;">
 
         <div class="swatch active" style="background-color: black;"></div>
@@ -22,7 +26,7 @@
         <div class="swatch" style="background-color: white;"></div>
 
     </div>
-        <div id="rad" style="float: right; margin-left: 10%;">
+        <div id="rad" style="float: right; margin-left: 10%; font-size: larger;">
                 Marker-Radius: <span id="radval">7</span>
                 <div id="plus" class="radcontrol" style="cursor: pointer; margin-left: 3px;">+</div>
                 <div id="minus" class="radcontrol" style="cursor: pointer; margin-left: 3px;">-</div>
