@@ -442,7 +442,10 @@ h5{
     display: block;
   }
   
-  .dropdown-content a:hover {background-color: #32ca6f62; transition-duration: 0.5s;}
+  .dropdown-content .on:hover {background-color:#ffe32fd5; transition-duration: 0.5s;}
+  .dropdown-content .com:hover {background-color:#32ca6fdc; transition-duration: 0.5s;}
+  .dropdown-content .up:hover {background-color:#44449cc7; transition-duration: 0.5s;}
+  .dropdown-content .del:hover {background-color:#ef3e44d2; transition-duration: 0.5s;}
   .dropdown:hover .dropdown-content {display: block;}
   .dropdown:hover .dropbtn {background-color: rgb(212, 211, 211); color: black;}
   
