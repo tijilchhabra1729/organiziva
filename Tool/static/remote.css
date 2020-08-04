@@ -108,7 +108,7 @@ button {
 .change{
     background-color: #44449C !important;
     font-weight: 800;
-    font-size: 90% !important;
+    /* font-size: 90% !important; */
     color: white !important;
     outline: none;
 }
