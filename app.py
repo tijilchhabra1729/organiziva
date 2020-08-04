@@ -277,6 +277,7 @@ def change_event(team_id,event_id,type):
     if current_user in team.workers:
         if type == 'u':
             event.type = 'upcoming'
+            event.start_date = None
         elif type == 'o':
             event.type = 'ongoing'
             event.start_date = datetime.now()
