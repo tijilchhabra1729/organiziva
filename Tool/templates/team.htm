@@ -147,8 +147,8 @@ body {
             {%if current_user.id == team.ownerid%}
           <a class="del" style="font-weight: 600;"  title = "Delete" href="{{url_for('delete_event' , team_id = team_id , event_id = event.id)}}">Delete</a>
         {%endif%}
-        <a class="on" style="font-weight: 600;"  title = "Change status" href="{{url_for('change_event' , team_id = team_id , event_id = event.id , type = 'o')}}">Change to Ongoing</a>
-        <a class="com" style="font-weight: 600;"  title = "Change status" href="{{url_for('change_event' , team_id = team_id , event_id = event.id , type = 'c')}}">Change to Completed</a>
+        <a class="on" style="font-weight: 600;"  title = "Change status" href="{{url_for('change_event' , team_id = team_id , event_id = event.id , type = 'o')}}">Ongoing</a>
+        <a class="com" style="font-weight: 600;"  title = "Change status" href="{{url_for('change_event' , team_id = team_id , event_id = event.id , type = 'c')}}">Completed</a>
        
 
           </div>
@@ -184,10 +184,10 @@ body {
           <i class="fas fa-ellipsis-h dropbtn"></i>
           <div class="dropdown-content">
             {%if current_user.id == team.ownerid%}
-            <a class="del" style="font-weight: 600;" title = "Delete" href="{{url_for('delete_event' , team_id = team_id , event_id = event.id)}}">D</a>
+            <a class="del" style="font-weight: 600;" title = "Delete" href="{{url_for('delete_event' , team_id = team_id , event_id = event.id)}}">Delete</a>
           {%endif%}
-          <a class="up" style="font-weight: 600;" title = "Change status" href="{{url_for('change_event' , team_id = team_id , event_id = event.id , type = 'u')}}">Change to Upcoming</a>
-          <a class="com" style="font-weight: 600;" title = "Change status" href="{{url_for('change_event' , team_id = team_id , event_id = event.id , type = 'c')}}">Change to Completed</a>
+          <a class="up" style="font-weight: 600;" title = "Change status" href="{{url_for('change_event' , team_id = team_id , event_id = event.id , type = 'u')}}"> Upcoming</a>
+          <a class="com" style="font-weight: 600;" title = "Change status" href="{{url_for('change_event' , team_id = team_id , event_id = event.id , type = 'c')}}"> Completed</a>
   
 
           </div>
@@ -218,10 +218,10 @@ body {
           <i class="fas fa-ellipsis-h dropbtn"></i>
           <div class="dropdown-content">
             {%if current_user.id == team.ownerid%}
-          <a class="del" style="font-weight: 600;" title = "Delete" href="{{url_for('delete_event' , team_id = team_id , event_id = event.id)}}">D</a>
+          <a class="del" style="font-weight: 600;" title = "Delete" href="{{url_for('delete_event' , team_id = team_id , event_id = event.id)}}">Delete</a>
         {%endif%}
-        <a class="up" style="font-weight: 600;" title = "Change status" href="{{url_for('change_event' , team_id = team_id , event_id = event.id , type = 'u')}}">Change to Upcoming</a>
-        <a class="on" style="font-weight: 600;" title = "Change status" href="{{url_for('change_event' , team_id = team_id , event_id = event.id , type = 'o')}}">Change to Onogoing</a>
+        <a class="up" style="font-weight: 600;" title = "Change status" href="{{url_for('change_event' , team_id = team_id , event_id = event.id , type = 'u')}}"> Upcoming</a>
+        <a class="on" style="font-weight: 600;" title = "Change status" href="{{url_for('change_event' , team_id = team_id , event_id = event.id , type = 'o')}}"> Onogoing</a>
 
 
           </div>
