@@ -46,7 +46,6 @@
           {%else%}
           <a class="clicks nav-item active" href="{{url_for('register')}}">Register</a>
           <a class="clicks nav-item active" href="{{url_for('login')}}">Login</a>
-          <a class="clicks nav-item active" href="{{url_for('chatbot')}}">Chatbot</a>
           {%endif%}
 
       </div>
@@ -58,8 +57,8 @@
   allow="microphone;"
   width="350"
   height="430"
-  src="https://console.dialogflow.com/api-client/demo/embedded/organiziva"   
-  >  
+  src="https://console.dialogflow.com/api-client/demo/embedded/organiziva"
+  >
 </iframe>
 <button type="button" class="btn btn-primary cancel" onclick="closeBot()">Close</button>
 </div>
@@ -67,7 +66,7 @@
   function openBot() {
     document.getElementById("myBot").style.display = "flex";
   }
-  
+
   function closeBot() {
     document.getElementById("myBot").style.display = "none";
   }

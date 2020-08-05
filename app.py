@@ -562,6 +562,7 @@ def whiteboard(team_id):
 
 
 @app.route('/<team_id>/vc', methods=['GET','POST'])
+@login_required
 def vc(team_id):
     team = Team.query.filter_by(randomid = team_id).first()
     if team is None:
@@ -572,6 +573,7 @@ def vc(team_id):
 
 
 @app.route('/vc_login', methods=['POST'])
+@login_required
 def vc_login():
     username = request.get_json(force=True).get('username')
     if not username:

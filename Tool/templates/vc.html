@@ -104,14 +104,14 @@ body {
     </div>
     
 <br>
-     
-<center> 
-    <div id = "main" >
-   <h1 style="font-weight: bolder; text-align: center;">VideoChat Room of:</h1><br>
-     
+
+
+    <div id = "main">
+      <h1 style="font-weight: bolder;">VideoChat Room of:</h1><br>
+
         <div style="margin-left: 8%;">
       <h1 >Team {{team.name}}</h1><br>
-  
+
       <form style="font-size: larger;">
           <label style="font-size: larger;" for="username">Name: </label>
           <input  type="text" name=”username” value = {{current_user.name}} disabled = "disabled"  id="username">
@@ -125,15 +125,15 @@ body {
     </div>
 
     <div style="display: flex; margin-top: 5%; flex-direction: row; background-color: rgb(235, 235, 235); width: 35%; align-items: center; justify-content: center; text-align: center;">
-    <span style="font-size:30px;cursor:pointer; margin: 1.5%; border: 0.5px solid rgb(208, 208, 208);padding: 1%;" onclick="openNav()">
+    <span style="font-size: larger;background-color: #dfdfeb !important; margin: 2%;" class="btn" onclick="openNav()">
       <i class="fa fa-commenting"></i>Chat
       </span>
-      <a title="whiteboard" target = "_blank" style="font-size: 180%;margin: 1.5%;border: 0.5px solid rgb(208, 208, 208); padding: 1%;" href="{{url_for('whiteboard' , team_id = team_id)}}">
-        <i class="fas fa-chalkboard-teacher"></i>Canvas</a>  
-        <a id="share_screen" style="font-size: 180%;margin: 1.5%;border: 0.5px solid rgb(208, 208, 208); padding: 1%;" disabled><i class="fas fa-desktop"></i>Share screen</a>
+      <a style="font-size: larger;background-color: #dfdfeb !important; margin: 2%;" class="btn"title="whiteboard" target = "_blank" href="{{url_for('whiteboard' , team_id = team_id)}}">
+        <i class="fas fa-chalkboard-teacher"></i>Canvas</a>
+        <button style="font-size: larger;background-color: #dfdfeb !important; margin: 2%;" class="btn"id="share_screen" disabled><i class="fas fa-desktop"></i>Share screen</button>
       </div>
     </div></center>
-  
+
 
 
         <script src="//media.twiliocdn.com/sdk/js/video/releases/2.3.0/twilio-video.min.js"></script>
