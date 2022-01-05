@@ -359,7 +359,7 @@ typing-extensions==3.7.4.2
 ujson==1.35
 unicodecsv==0.14.1
 uritemplate==3.0.1
-urllib3==1.22
+urllib3==1.26.5
 URLObject==2.4.3
 virtualenv==20.0.28
 visitor==0.1.3
