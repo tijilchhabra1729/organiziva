@@ -10,7 +10,7 @@ from flask_socketio import SocketIO
 app = Flask(__name__)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+os.path.join(basedir,'data.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://xcdnsqpnigrsrf:0736e45fd73a9240f73a52de250d0628d1b3de3fd648acb7fdd7022cdbecac45@ec2-3-224-251-59.compute-1.amazonaws.com:5432/dacbmprjqvsrst'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'mysecret'
 db = SQLAlchemy(app)

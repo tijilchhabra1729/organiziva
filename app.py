@@ -45,6 +45,7 @@ def teamsby_username(user):
 ############ * CHATBOT * #################
 
 @app.route('/webhook', methods=['POST'])
+
 def webhook():
     print("webhook started")
     req = request.get_json(silent=True, force=True)
@@ -296,8 +297,6 @@ def account():
     if form.validate_on_submit():
         current_user.email = form.email.data
         current_user.username = form.username.data
-
-
         if form.picture.data is not None:
             id = current_user.id
             pic = add_profile_pic(form.picture.data,id)
